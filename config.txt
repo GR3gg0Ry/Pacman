@@ -1,0 +1,2 @@
+map_display = "symbols"        # "escape" для отображения карты с escape-кодами, "symbols" для простых символов
+demon_movement = "towards_pacman"  # "cyclic" или "towards_pacman"
