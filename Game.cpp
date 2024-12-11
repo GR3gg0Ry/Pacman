@@ -14,7 +14,7 @@ void Game::pacmanMove() {
     Point current_point = pacman_.getPoint();
     Point next_point = current_point;
 
-    char move = input_.read();
+    char move = input_.readchar();
         switch (move) {
         case 'w': case 'W': 
             next_point.y -= 1;
