@@ -3,7 +3,7 @@
 class Input {
 public:
     char getc();
-    char read();
+    char readchar();
 private:
     char c = '\0';
 };
