@@ -1,11 +1,21 @@
 #include "Input.h"
-
+#include <termios.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <iostream>
-#include <conio.h>
 
-char Input::read() {
+char Input::readchar() {
+    termios old_settings;
+    tcgetattr(STDIN_FILENO, &old_settings);
+    termios new_settings = old_settings;
+    new_settings.c_lflag &= ~ICANON; 
+    new_settings.c_lflag &= ~ECHO;   
+    new_settings.c_cc[VMIN] = 1;    
+
+    new_settings.c_cc[VTIME] = 0;   
+    tcsetattr(STDIN_FILENO, TCSANOW, &new_settings);
     do {
-        c = static_cast<char>(getch());
+        read(STDIN_FILENO, &c, 1);
         if (c == 27) {
             std::cout << "The game was interrupted" << std::endl;
             exit(0);
@@ -15,6 +25,7 @@ char Input::read() {
         }
         fflush(stdin);
     } while (c == '\0');
+    tcsetattr(STDIN_FILENO, TCSANOW, &old_settings);
     return c;
 }
 
