@@ -8,7 +8,9 @@ using namespace std;
 
 int main() {
     Game game;
+    int* options = game.menu();
     while (true) {
+        
         game.output();
 
         if (game.pacmanIsExist()) {
