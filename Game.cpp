@@ -10,6 +10,159 @@ Game::Game() : map_(Map()),
     }
 }
 
+int* Game::menu() {
+    struct winsize w;
+    int menuSize=4;
+    std::string menuItems[menuSize] = { "Start Game", "Options","Bonuses", "Exit" };
+    int selectedItem = 0;
+    int lev=2,bon=50;
+    int* opt;
+    
+    while (true) {
+        system("clear"); // Очистка 
+        ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+        int strLength = 10;
+        int padding = (w.ws_col - strLength) / 2;
+        
+        std::cout << "\033[42m" << std::string(w.ws_col, ' ') << "\033[0m" << '\n' << std::endl;
+        for (int i = 0; i < menuSize; i++) {
+            if (i == selectedItem) {
+                std::cout << std::string(padding, ' ') << "> " << menuItems[i] << " <" << std::endl; // Выделенный элемент
+            } else {
+                std::cout << std::string(padding, ' ') << "  " << menuItems[i] << std::endl;
+            }
+        }
+
+        char key = input_.readmenu(); // Считывание нажатой клавиши
+
+        if (key == 'w') { // Стрелка вверх
+            selectedItem = (selectedItem - 1 + menuSize) % menuSize;
+        } else if (key == 's') { // Стрелка вниз
+            selectedItem = (selectedItem + 1) % menuSize;
+        } else if (key == '\n') {
+            if (selectedItem == 3) {
+            system("clear");
+                std::cout << "Exiting..." << std::endl;
+                exit(0); // Выход из программы
+            }
+            else if (selectedItem == 0) {
+            system("clear");
+                break;
+            }
+            else if (selectedItem == 1) {
+                lev = options();
+            }
+            else if (selectedItem == 2) {
+                bon = bonuses();
+            }
+        }
+        
+    }
+    opt[1]=lev;
+    opt[2]=bon;
+    return opt;
+}
+
+int Game::options() {
+    struct winsize w;
+    int menuSize=3;
+    std::string menuItems[menuSize] = { "Easy", "Normal", "Hard" };
+    int selectedItem = 0;
+    int lev;
+    
+    while (true) {
+        system("clear"); // Очистка 
+        ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+        int strLength = 4;
+        int padding = (w.ws_col - strLength) / 2;
+        
+        std::cout << "\033[41m" << std::string(w.ws_col, ' ') << "\033[0m" << '\n' << std::endl;
+        for (int i = 0; i < menuSize; i++) {
+            if (i == selectedItem) {
+                std::cout << std::string(padding, ' ') << "> " << menuItems[i] << " <" << std::endl; // Выделенный элемент
+            } else {
+                std::cout << std::string(padding, ' ') << "  " << menuItems[i] << std::endl;
+            }
+        }
+
+        char key = input_.readmenu(); // Считывание нажатой клавиши
+        
+        if (key == 'w') { // Стрелка вверх
+            selectedItem = (selectedItem - 1 + menuSize) % menuSize;
+        } else if (key == 's') { // Стрелка вниз
+            selectedItem = (selectedItem + 1) % menuSize;
+        } else if (key == '\n') {
+            if (selectedItem == 2) {
+              lev = 3;
+              break;
+            }
+            else if (selectedItem == 0) {
+                lev = 1;
+                break;
+            }
+            else if (selectedItem == 1) {
+                lev = 2;
+                break;
+            }
+        }
+        
+    }
+
+    return lev;
+}
+
+int Game::bonuses() {
+    struct winsize w;
+    int menuSize=7;
+    std::string menuItems[menuSize] = { "20", "25","30","35","40","45","50" };
+    int selectedItem = 0;
+    int bon=40;
+    
+    while (true) {
+        system("clear"); // Очистка 
+        ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+        int strLength = 2;
+        int padding = (w.ws_col - strLength) / 2;
+        
+        std::cout << "\033[41m" << std::string(w.ws_col, ' ') << "\033[0m" << '\n' << std::endl;
+        for (int i = 0; i < menuSize; i++) {
+            if (i == selectedItem) {
+                std::cout << std::string(padding, ' ') << "> " << menuItems[i] << " <" << std::endl; // Выделенный элемент
+            } else {
+                std::cout << std::string(padding, ' ') << "  " << menuItems[i] << std::endl;
+            }
+        }
+
+        char key = input_.readmenu(); // Считывание нажатой клавиши
+        
+        if (key == 'w') { // Стрелка вверх
+            selectedItem = (selectedItem - 1 + menuSize) % menuSize;
+        } else if (key == 's') { // Стрелка вниз
+            selectedItem = (selectedItem + 1) % menuSize;
+        } else if (key == '\n') {
+          switch(selectedItem) {
+          case 0: bon=20;
+          break;
+          case 1: bon=25;
+          break;
+          case 2: bon=30;
+          break;
+          case 3: bon=35;
+          break;
+          case 4: bon=40;
+          break;
+          case 5: bon=45;
+          break;
+          case 6: bon=50;
+          break;
+          }
+          break;
+    }
+    }
+
+    return bon;
+}
+
 void Game::pacmanMove() {
     Point current_point = pacman_.getPoint();
     Point next_point = current_point;
@@ -145,7 +298,7 @@ void Game::printGameOverScreen() {
     };
 
     // Очищаем экран
-    std::cout << "\033[2J\033[H";
+    system("clear");
 
     // Печатаем надпись "GAME OVER" в стиле карты
     for (const auto& row : game_over_art) {
