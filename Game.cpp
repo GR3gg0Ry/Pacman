@@ -12,7 +12,7 @@ Game::Game() : map_(Map()),
 
 int* Game::menu() {
     struct winsize w;
-    int menuSize=4;
+    const int menuSize=4;
     std::string menuItems[menuSize] = { "Start Game", "Options","Bonuses", "Exit" };
     int selectedItem = 0;
     int lev=2,bon=50;
@@ -65,7 +65,7 @@ int* Game::menu() {
 
 int Game::options() {
     struct winsize w;
-    int menuSize=3;
+    const int menuSize=3;
     std::string menuItems[menuSize] = { "Easy", "Normal", "Hard" };
     int selectedItem = 0;
     int lev;
@@ -113,7 +113,7 @@ int Game::options() {
 
 int Game::bonuses() {
     struct winsize w;
-    int menuSize=7;
+    const int menuSize=7;
     std::string menuItems[menuSize] = { "20", "25","30","35","40","45","50" };
     int selectedItem = 0;
     int bon=40;
