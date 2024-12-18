@@ -8,11 +8,12 @@ using namespace std;
 
 int main() {
     Game game;
-    int* options = game.menu();
+    int* options = game.menu(game.Map_counter());
+    
     while (true) {
         
         game.output();
-
+        
         if (game.pacmanIsExist()) {
             game.pacmanMove();
         } else {
