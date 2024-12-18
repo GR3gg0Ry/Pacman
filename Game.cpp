@@ -10,12 +10,12 @@ Game::Game() : map_(Map()),
     }
 }
 
-int* Game::menu() {
+int* Game::menu(int maps) {
     struct winsize w;
-    const int menuSize=4;
-    std::string menuItems[menuSize] = { "Start Game", "Options","Bonuses", "Exit" };
+    const int menuSize=5;
+    std::string menuItems[menuSize] = { "Start Game", "Options","Bonuses","Map","Exit" };
     int selectedItem = 0;
-    int lev=2,bon=50;
+    int lev=2,bon=50,map1=0;
     int* opt;
     
     while (true) {
@@ -40,7 +40,7 @@ int* Game::menu() {
         } else if (key == 's') { // Стрелка вниз
             selectedItem = (selectedItem + 1) % menuSize;
         } else if (key == '\n') {
-            if (selectedItem == 3) {
+            if (selectedItem == 4) {
             system("clear");
                 std::cout << "Exiting..." << std::endl;
                 exit(0); // Выход из программы
@@ -55,11 +55,17 @@ int* Game::menu() {
             else if (selectedItem == 2) {
                 bon = bonuses();
             }
+            else if (selectedItem == 3) {
+
+                map1 = map(maps);
+            }
         }
         
     }
     opt[1]=lev;
     opt[2]=bon;
+    opt[3]=map1;
+    map_.Map_change(map1);
     return opt;
 }
 
@@ -161,6 +167,72 @@ int Game::bonuses() {
     }
 
     return bon;
+}
+
+int Game::map(int maps) {
+    if(maps==0) {
+      return 0;}
+    struct winsize w;
+    const int menuSize=maps;
+    int menuItems[maps];
+    for(int i=0;i<menuSize;i++)
+      menuItems[i]=i+1;
+    int selectedItem = 0;
+    int map=0;
+    
+    while (true) {
+        system("clear"); // Очистка 
+
+        ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+        int strLength = 2;
+        int padding = (w.ws_col - strLength) / 2;
+        
+        std::cout << "\033[41m" << std::string(w.ws_col, ' ') << "\033[0m" << '\n' << std::endl;
+
+        for (int i = 0; i < menuSize; i++) {
+            if (i == selectedItem) {
+                std::cout << std::string(padding, ' ') << "> " << menuItems[i] << " <" << std::endl; // Выделенный элемент
+            } else {
+                std::cout << std::string(padding, ' ') << "  " << menuItems[i] << std::endl;
+            }
+        }
+
+        char key = input_.readmenu(); // Считывание нажатой клавиши
+        
+        if (key == 'w') { // Стрелка вверх
+
+            selectedItem = (selectedItem - 1 + menuSize) % menuSize;
+        } else if (key == 's') { // Стрелка вниз
+            selectedItem = (selectedItem + 1) % menuSize;
+
+        } else if (key == '\n') {
+          map = selectedItem+1;
+          break;
+    }
+}
+    return map;
+}
+
+
+int Game::Map_counter()
+{
+    /*std::ifstream configFile("config.txt");
+    ;
+    if (configFile.is_open()) {
+        std::getline(configFile, path);
+        configFile.close();
+    }*/
+    
+    path = "/home/vboxuser/Documents/Map";
+    
+    map_.inputpath(path);
+        int fileCount = 0;
+    for (const auto& entry : std::filesystem::directory_iterator(path)) {
+        if (entry.is_regular_file()) {
+            fileCount++;
+        }
+    } 
+    return fileCount;
 }
 
 void Game::pacmanMove() {
