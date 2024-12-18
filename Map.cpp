@@ -37,6 +37,32 @@ void Map::addScores(int scores) {
     score_counter_.addScores(scores);
 }
 
+void Map::inputpath(std::string path1)
+{
+    pathm=path1;
+}
+
+void Map::Map_change(int maps) {
+    if(maps!=0)
+    {
+    std::string filename = "1";
+    std::string filePath = pathm + "/" + filename; 
+    
+    std::ifstream file(filePath);
+    std::vector<std::string> lines;
+    
+    if (!file.is_open()) 
+        std::cerr << "Ошибка при открытии файла: " << filePath << std::endl;
+    std::string line;
+    while (std::getline(file, line)) {
+        lines.push_back(line);
+    }
+    
+    file.close();
+    map_ = lines;
+    }
+} 
+
 void Map::renderMap() {
     std::cout << "\033[2J\033[H"; // Очистка экрана и установка курсора в начало
     score_counter_.renderScore();
