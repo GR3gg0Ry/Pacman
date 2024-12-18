@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(Pacman)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(SOURCES
@@ -10,6 +10,7 @@ set(SOURCES
     Input.cpp
     Map.cpp
     Game.cpp
+    
 )
 
 set(HEADERS
@@ -19,5 +20,6 @@ set(HEADERS
     Entity.h
     Game.h
     GameUtils.h
+    
 )
 add_executable(Pacman ${SOURCES} ${HEADERS})
