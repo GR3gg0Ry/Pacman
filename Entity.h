@@ -37,6 +37,10 @@ public:
     void deadPacman() {
         exist_ = false;
     }
+    
+    void alivePacman() {
+        exist_ = true;
+    }
 private:
     bool exist_;
 };
