@@ -1,12 +1,15 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <unistd.h>
 
 #include "Game.h"
 
 using namespace std;
 
 int main() {
+    
+    while(true) {
     Game game;
     int* options = game.menu(game.Map_counter());
     
@@ -18,6 +21,7 @@ int main() {
             game.pacmanMove();
         } else {
             game.printGameOverScreen();
+            sleep(3);
             break;
         }
 
@@ -25,8 +29,9 @@ int main() {
             game.ghostMove();
         } else {
             game.printGameOverScreen();
+            sleep(3);
             break;
         }
-    }
+    } }
     return 0;
 }
