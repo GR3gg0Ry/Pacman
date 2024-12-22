@@ -3,9 +3,11 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <cstring>
 
 #include "GameUtils.h"
 #include "ScoreCounter.h"
+#define MAX_NAME 10
 
 class Map {
 public:
@@ -17,8 +19,7 @@ public:
     std::vector<Point> getGhostStartCoordinates();
     void addScores(int scores);
     void renderMap();
-    void Map_change(int);
-    void inputpath(std::string);
+    void Map_change(char*);
 private:
     std::vector<std::string> map_ = {
         "#############################",
@@ -50,7 +51,6 @@ private:
     Point pacman_start_coordinates_;
     std::vector<Point> ghost_start_coordinates_;
     ScoreCounter score_counter_;
-    std::string pathm;
     bool checkField(std::size_t x, std::size_t y);
     Point findPacmanStartCoordinates();
     std::vector<Point> findGhostStartCoordinates();
