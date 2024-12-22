@@ -65,7 +65,7 @@ int* Game::menu(int maps) {
     opt[1]=lev;
     opt[2]=bon;
     opt[3]=map1;
-    map_.Map_change(map1);
+    map_.Map_change(fileNames[map1]);
     return opt;
 }
 
@@ -173,10 +173,7 @@ int Game::map(int maps) {
     if(maps==0) {
       return 0;}
     struct winsize w;
-    const int menuSize=maps;
-    int menuItems[maps];
-    for(int i=0;i<menuSize;i++)
-      menuItems[i]=i+1;
+    const int menuSize=maps+1;
     int selectedItem = 0;
     int map=0;
     
@@ -191,9 +188,9 @@ int Game::map(int maps) {
 
         for (int i = 0; i < menuSize; i++) {
             if (i == selectedItem) {
-                std::cout << std::string(padding, ' ') << "> " << menuItems[i] << " <" << std::endl; // Выделенный элемент
+                std::cout << std::string(padding, ' ') << "> " << fileNames[i] << " <" << std::endl; // Выделенный элемент
             } else {
-                std::cout << std::string(padding, ' ') << "  " << menuItems[i] << std::endl;
+                std::cout << std::string(padding, ' ') << "  " << fileNames[i] << std::endl;
             }
         }
 
@@ -206,7 +203,7 @@ int Game::map(int maps) {
             selectedItem = (selectedItem + 1) % menuSize;
 
         } else if (key == '\n') {
-          map = selectedItem+1;
+          map = selectedItem;
           break;
     }
 }
@@ -215,21 +212,15 @@ int Game::map(int maps) {
 
 
 int Game::Map_counter()
-{
-    /*std::ifstream configFile("config.txt");
-    ;
-    if (configFile.is_open()) {
-        std::getline(configFile, path);
-        configFile.close();
-    }*/
-    
-    path = "/home/vboxuser/Documents/Map";
-    
-    map_.inputpath(path);
-        int fileCount = 0;
+{    
+    std::string path = "./Map";
+    strncpy(fileNames[0],"DEFAULT",MAX_NAME);
+    int fileCount = 0;
     for (const auto& entry : std::filesystem::directory_iterator(path)) {
         if (entry.is_regular_file()) {
             fileCount++;
+            strncpy(fileNames[fileCount],entry.path().filename().string().c_str(),MAX_NAME);
+            fileNames[fileCount][MAX_NAME] = '\0';
         }
     } 
     return fileCount;
@@ -393,7 +384,8 @@ void Game::printGameOverScreen() {
     // Вывод сообщения ниже надписи
     std::cout << "\n";
     std::cout << "\033[1m\033[31mThanks for playing! Better luck next time.\033[0m\n";
-    std::cout << "\033[1m\033[32mPress 'R' to Restart\nPress 'Q' to Quit\n\033[0m";
+    std::cout << "\033[1m\033[32mWaiting to Restart\nPress 'Esc' to Quit\n\033[0m";
+    pacman_.alivePacman();
 }
 
 Point Game::findOtherPortal(const Point& current_portal) {
