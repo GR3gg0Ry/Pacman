@@ -6,9 +6,9 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <filesystem>
-#include <string>
 #include <fstream>
 #include <iostream>
+
 
 class Game {
 public:
@@ -27,9 +27,9 @@ public:
 private:
     Map map_;
     Pacman pacman_;
-    std::string path;
     std::vector<Ghost> ghosts_;
     Input input_;
     Point findOtherPortal(const Point& current_portal);
     bool isOccupiedByGhost(const Point& point);
+    char fileNames[MAX_NAME][MAX_NAME];
 };
