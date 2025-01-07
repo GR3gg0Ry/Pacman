@@ -1,46 +1,54 @@
 #pragma once
 
 #include "GameUtils.h"
+#include "Map.h"
+
+enum GhostBehavior {
+    FOLLOW_PACMAN,
+    RANDOM
+};
+
 
 class Entity {
 public:
-    Entity(Point p) : point_(p) {}
-    
-    void changePoint(Point p) {
-        point_ = p;
-    }
+    Entity(Point p, Map* map);
 
-    Point getPoint() const {
-        return point_;
-    }
+    void changePoint(Point p);
+    Point getPoint() const;
+    
+    Map* getMap() const;
+
 private:
     Point point_;
+    Map* map_;
 };
 
 
 class Ghost : public Entity {
 public:
-    Ghost(Point p) : Entity(p) {}
+    Ghost(Point p, Map* map, GhostBehavior behavior);
+
+    Point move(Point pacman_position);
+
+private:
+    GhostBehavior behavior_;
+
+    Point moveTowardsPacman(Point pacman_position);
+    Point randomMove();
+
+    bool checkMapField(Point p) const; 
 };
 
 
 class Pacman : public Entity {
 public:
-    Pacman(Point p) : Entity(p) {
-        exist_ = true;
-    }
+    Pacman(Map* map);
 
-    bool getExist() const {
-        return exist_;
-    }
+    bool getExist() const;
+    void deadPacman();
 
-    void deadPacman() {
-        exist_ = false;
-    }
-    
-    void alivePacman() {
-        exist_ = true;
-    }
+    void move(char symbol);
+
 private:
     bool exist_;
 };
