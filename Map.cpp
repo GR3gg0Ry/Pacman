@@ -2,130 +2,74 @@
 
 #include <iostream>
 
-Map::Map() {
+Map::Map(const std::vector<std::string>& map) : map_(map) {
     map_size_ = {map_[0].size(), map_.size()};
     pacman_start_coordinates_ = findPacmanStartCoordinates();
     ghost_start_coordinates_ = findGhostStartCoordinates();
 }
 
-char Map::getField(std::size_t x, std::size_t y) {
-    if (checkField(x, y)) {
-        return map_[y][x];
+char Map::getField(Point p) const {
+    if (checkField(p)) {
+        return map_[p.y][p.x];
     }
     return ' ';
+}
+
+void Map::changeField(Point p, char symbol) {
+    if (checkField(p)) {
+        map_[p.y][p.x] = symbol;
+    }
 }
 
 Size Map::getMapSize() {
     return map_size_;
 }
 
-void Map::changeField(std::size_t x, std::size_t y, char symbol) {
-    if (checkField(x, y)) {
-        map_[y][x] = symbol;
-    }
-}
-
-Point Map::getPacmanStartCoordinates() {
+Point Map::getPacmanStartCoordinates() const {
     return pacman_start_coordinates_;
 }
 
-std::vector<Point> Map::getGhostStartCoordinates() {
+std::vector<Point> Map::getGhostStartCoordinates() const {
     return ghost_start_coordinates_;
+}
+
+Point Map::findOtherPortal(Point cur_portal) {
+    Point teleport;
+
+    for (std::size_t y = 0; y < map_size_.height; ++y) {
+        for (std::size_t x = 0; x < map_size_.width; ++x) {
+            if (map_[y][x] == 'T' && !(x == cur_portal.x && y == cur_portal.y)) {
+                teleport = {x, y};
+            }
+        }
+    }
+
+    if (teleport.x == 0) {
+        teleport.x += 1;
+    } else if (teleport.y == 0) {
+        teleport.y += 1;
+    } else if (teleport.x == map_size_.width - 1) {
+        teleport.x -= 1;
+    } else if (teleport.y == map_size_.height - 1) {
+        teleport.y -= 1;
+    }
+
+    return teleport;
 }
 
 void Map::addScores(int scores) {
     score_counter_.addScores(scores);
 }
 
-void Map::Map_change(char* names) {
-    if (strcmp(names,"DEFAULT")){
-    std::string name(names);
-    
-    std::string filePath = "./Map/" + name; 
-    
-    std::ifstream file(filePath);
-    std::vector<std::string> lines;
-    
-    if (!file.is_open()) 
-        std::cerr << "Ошибка при открытии файла: " << filePath << std::endl;
-    std::string line;
-    while (std::getline(file, line)) {
-        lines.push_back(line);
-    }
-    
-    file.close();
-    map_ = lines; }
-    else {
-          map_ = {
-        "#############################",
-        "#...............#........O..#",
-        "#O###.#####.###.#.###.###.#.#",
-        "#.###.#.....#...#...#.....#.#",
-
-        "#.###.#.###.###.###.#.###.#.#",
-        "#.....#.#.....G.....#.#.....#",
-        "#.###.#.#.#########.#.#.###.#",
-        "#.###.#.#...........#.#.###.#",
-        "#.....#.#.###.###.###.#.....#",
-        "#####.#.#.#.......#.#.#.#####",
-        "#.......#.#.......#.#.......#",
-        "#.#######.#...P...#.#######.#",
-        "T...........................T",
-        "#####.#.#.#.......#.#.#.#####",
-        "#.....#.#.#.###.###.#.#...G.#",
-
-        "#.###.#.#...........#.#.###.#",
-        "#.###.#.#.#########.#.#.###.#",
-        "#.O...#G#...........#.#.....#",
-        "#.###.#.###.###.###.#.###.#.#",
-        "#.###.#.....#...#...#.....#.#",
-        "#.###.#####.###.#.###.###.#.#",
-        "#...............#......O....#",
-        "#############################"
-    };
-    }
-    
-} 
-
-void Map::renderMap() {
-    std::cout << "\033[2J\033[H"; // Очистка экрана и установка курсора в начало
-    score_counter_.renderScore();
+void Map::printMap() {
+    std::cout << "\033[2J\033[H";
+    score_counter_.printScore();
     std::cout << std::endl;
-    for (const auto& row : map_) {
-        for (const auto& cell : row) {
-            switch (cell) {
-                case '#':
-                    std::cout << "\033[44m  \033[0m"; // Синий фон
-                    break;
-                case '.':
-                    std::cout << "\033[93m.\033[0m "; // Желтая точка
-                    break;
-                case 'P':
-                    std::cout << "\033[33mP\033[0m "; // Желтый Pac-Man
-                    break;
-                case 'G':
-                    std::cout << "\033[91mG\033[0m "; // Красный призрак
-                    break;
-                case 'O':
-                    std::cout << "\033[95mO\033[0m "; // Фиолетовый бонус
-                    break;
-                case 'T':
-                    std::cout << "\033[94mT\033[0m "; // Голубой портал
-                    break;
-                case ' ':
-                    std::cout << "  ";
-                    break;
-                default:
-                    std::cout << cell << " ";
-                    break;
-            }
-        }
-        std::cout << std::endl;
-    }
+    Render::renderMap(map_);
 }
 
-bool Map::checkField(std::size_t x, std::size_t y) {
-    if (y <= map_size_.height && x <= map_size_.width) {
+bool Map::checkField(Point p) const {
+    if (p.y <= map_size_.height && p.x <= map_size_.width) {
         return true;
     }
     return false;
