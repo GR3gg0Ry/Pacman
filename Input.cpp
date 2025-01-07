@@ -1,4 +1,5 @@
 #include "Input.h"
+
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -8,9 +9,9 @@ char Input::readchar() {
     termios old_settings;
     tcgetattr(STDIN_FILENO, &old_settings);
     termios new_settings = old_settings;
-    new_settings.c_lflag &= ~ICANON; // Неканонический режим (без Enter)
-    new_settings.c_lflag &= ~ECHO;   // Без эха введенных символов
-    new_settings.c_cc[VMIN] = 1;     // Читаем по одному символу
+    new_settings.c_lflag &= ~ICANON; 
+    new_settings.c_lflag &= ~ECHO;   
+    new_settings.c_cc[VMIN] = 1;     
 
     new_settings.c_cc[VTIME] = 0;    // Без таймаута
     tcsetattr(STDIN_FILENO, TCSANOW, &new_settings);
@@ -35,9 +36,9 @@ char Input::readmenu() {
     tcgetattr(STDIN_FILENO, &old_settings);
     termios new_settings = old_settings;
 
-    new_settings.c_lflag &= ~ICANON; // Неканонический режим (без Enter)
-    new_settings.c_lflag &= ~ECHO;   // Без эха введенных символов
-    new_settings.c_cc[VMIN] = 1;     // Читаем по одному символу
+    new_settings.c_lflag &= ~ICANON; 
+    new_settings.c_lflag &= ~ECHO;
+    new_settings.c_cc[VMIN] = 1;   
 
     new_settings.c_cc[VTIME] = 0;    // Без таймаута
     tcsetattr(STDIN_FILENO, TCSANOW, &new_settings);
@@ -50,8 +51,4 @@ char Input::readmenu() {
     } while (ch == '\0');
     tcsetattr(STDIN_FILENO, TCSANOW, &old_settings);
     return ch;
-}
-
-char Input::getc() {
-    return c;
 }
