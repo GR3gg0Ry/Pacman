@@ -10,7 +10,9 @@ set(SOURCES
     Input.cpp
     Map.cpp
     Game.cpp
-    
+    Entity.cpp
+    GameMenu.cpp
+    Render.cpp
 )
 
 set(HEADERS
@@ -20,6 +22,7 @@ set(HEADERS
     Entity.h
     Game.h
     GameUtils.h
-    
+    Render.h
+    GameMenu.h
 )
 add_executable(Pacman ${SOURCES} ${HEADERS})
