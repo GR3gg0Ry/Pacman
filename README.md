@@ -24,6 +24,11 @@ Program interface is implemented in UNIX console.
 + `include` - header files
 + `src` - .cpp files
 
+## Instructions for working with the project
++ [Menu](docs/menu.md)
++ [Game](docs/game.md)
++ [Build and launch](docs/launch.md)
+
 ## Requirements
 The following must be installed on the device:
 + C++17
