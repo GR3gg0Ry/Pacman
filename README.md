@@ -9,15 +9,21 @@ Program interface is implemented in UNIX console.
 
 <img src='https://github.com/GR3gg0Ry/Pacman/blob/main/docs/pacman.gif?raw=true'/>
 
-## Features
+## Main features
 
 1. Player can choose the difficulty level in the menu.
 2. Player can select a map from the maps directory.
 3. Player can move through free fields or fields with bonuses using the WASD keys.
 4. Levels differ with game difficulty, they can be changed in settings.txt file.
-5. With each turn of the Pacman, the Demons make one move
-6. The game can be stopped by pressing ESC
-  
+5. With each turn of the Pacman, the Demons make one move.
+6. The game can be stopped by pressing ESC.
+7. User can upload their map by adding it to the maps directory.
+
+## Assigning project directories:
++ `docs` - documentation files
++ `include` - header files
++ `src` - .cpp files
+
 ## Requirements
 The following must be installed on the device:
 + C++17
