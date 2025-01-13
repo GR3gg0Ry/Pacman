@@ -16,7 +16,7 @@ The winner is the one who collects all the bonuses.
 
 After defeat, the player returns to the menu. You can read about the menu here -> [Menu](menu.md)
 
-<img src=''/>
+<img src='https://github.com/GR3gg0Ry/Pacman/blob/main/docs/pacman.gif?raw=true'/>
 
 |    Key  |                      Appointment                         |
 | ------- | -------------------------------------------------------- |
