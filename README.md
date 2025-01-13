@@ -27,7 +27,7 @@ Program interface is implemented in UNIX console.
 ## Instructions for working with the project
 + [Menu](docs/menu.md)
 + [Game](docs/game.md)
-+ [Build and launch](docs/launch.md)
++ [Installation](docs/installation.md)
 
 ## Requirements
 The following must be installed on the device:
