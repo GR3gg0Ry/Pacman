@@ -6,23 +6,23 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(SOURCES
-    main.cpp
-    Input.cpp
-    Map.cpp
-    Game.cpp
-    Entity.cpp
-    GameMenu.cpp
-    Render.cpp
+    src/main.cpp
+    src/Input.cpp
+    src/Map.cpp
+    src/Game.cpp
+    src/Entity.cpp
+    src/GameMenu.cpp
+    src/Render.cpp
 )
 
 set(HEADERS
-    Input.h
-    Map.h
-    ScoreCounter.h
-    Entity.h
-    Game.h
-    GameUtils.h
-    Render.h
-    GameMenu.h
+    include/Input.h
+    include/Map.h
+    include/ScoreCounter.h
+    include/Entity.h
+    include/Game.h
+    include/GameUtils.h
+    include/Render.h
+    include/GameMenu.h
 )
 add_executable(Pacman ${SOURCES} ${HEADERS})
