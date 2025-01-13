@@ -1,8 +1,7 @@
 # Build and launch the game
 
-There are several ways to download the program sources:
+You need to install the game:
 + ```` git clone https://github.com/GR3gg0Ry/Pacman.git ````
-+ [Download](https://github.com/GR3gg0Ry/Pacman/archive/refs/heads/project.zip)
 
 You need to perform the following actions:
 ```` 
