@@ -8,5 +8,5 @@ You need to perform the following actions:
 cd Pacman
 cmake .
 make
-./warships        //Launch program
+./Pacman
 ````
