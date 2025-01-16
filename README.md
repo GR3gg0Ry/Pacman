@@ -34,3 +34,6 @@ The following must be installed on the device:
 + C++17
 + Cmake 3.16
 + Make
+
+## Link to the project page
++ https://gr3gg0ry.github.io/Pacman/
