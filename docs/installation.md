@@ -5,8 +5,12 @@ You need to install the game:
 
 You need to perform the following actions:
 ```` 
-cd Pacman
+cd /Pacman
 cmake .
 make
 ./Pacman
+````
+Сommand to copy:
+```` 
+cd /Pacman && cmake . && make && ./Pacman
 ````
