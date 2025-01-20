@@ -7,8 +7,7 @@ You need to perform the following actions:
 ````
 git clone https://github.com/GR3gg0Ry/Pacman
 mkdir -p Pacman/build
-mkdir -p Pacman/build/Maps
-cp -a /Pacman/Maps /Pacman/build/Maps
+cp -a Pacman/Maps /Pacman/build
 cd Pacman/build
 cmake ..
 make
@@ -16,5 +15,5 @@ make
 ````
 Сommand to copy:
 ```` 
-cd git clone https://github.com/GR3gg0Ry/Pacman && mkdir -p Pacman/build && mkdir -p Pacman/build/Maps && cp -a /Pacman/Maps /Pacman/build/Maps && cd Pacman/build && cmake .. && make && ./Pacman
+git clone https://github.com/GR3gg0Ry/Pacman && mkdir -p Pacman/build && cp -a Pacman/Maps Pacman/build && cd Pacman/build && cmake .. && make && ./Pacman
 ````
