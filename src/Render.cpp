@@ -4,12 +4,14 @@
 
 namespace Render {
     void renderGameOver() {
+        system("clear");
         std::cout << "\n";
         std::cout << "\033[1m\033[31m!Game Over!\033[0m\n";
         std::cout << "\033[1m\033[31mThanks for playing! Better luck next time.\033[0m\n";
     }
 
     void renderScore(const int score) {
+        system("clear");
         std::cout << "\033[1;32mScore: " << std::setw(5) << score << "\033[0m" << std::endl;
     }
 
