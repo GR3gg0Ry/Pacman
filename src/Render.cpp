@@ -10,12 +10,19 @@ namespace Render {
         std::cout << "\033[1m\033[31mThanks for playing! Better luck next time.\033[0m\n";
     }
 
+    void renderWin() {
+        system("clear");
+        std::cout << "\n";
+        std::cout << "\033[1m\033[42mYou are winner! Thanks for playing! Press Esc to exit.\033[0m\n";
+    }
+
     void renderScore(const int score) {
         system("clear");
         std::cout << "\033[1;32mScore: " << std::setw(5) << score << "\033[0m" << std::endl;
     }
 
     void renderMap(const std::vector<std::string>& map) {
+        int flag=0;
         for (const auto& row : map) {
             for (const auto& cell : row) {
                 switch (cell) {
@@ -47,5 +54,7 @@ namespace Render {
             }
             std::cout << std::endl;
         }
+    if(flag==0)
+        renderWin();
     }
 }
