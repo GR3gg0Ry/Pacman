@@ -30,6 +30,7 @@ namespace Render {
                         std::cout << "\033[44m  \033[0m"; // Синий фон
                         break;
                     case '.':
+                        flag = 1;
                         std::cout << "\033[93m.\033[0m "; // Желтая точка
                         break;
                     case 'P':
@@ -39,6 +40,7 @@ namespace Render {
                         std::cout << "\033[91mG\033[0m "; // Красный призрак
                         break;
                     case 'O':
+                        flag = 1;
                         std::cout << "\033[95mO\033[0m "; // Фиолетовый бонус
                         break;
                     case 'T':
